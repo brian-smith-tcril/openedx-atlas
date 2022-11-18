@@ -16,5 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: install make
+      run: apk add make
+
     - name: Use argbash to generate script
       run: make argbash
