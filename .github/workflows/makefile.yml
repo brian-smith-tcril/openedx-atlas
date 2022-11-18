@@ -16,11 +16,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: install make
-      run: apk add make
+    - name: install dependencies
+      run: apk add make shellcheck
 
     - name: Use argbash to generate script
       run: make argbash
+      
+    - name: shellcheck generated script
+      run: make shellcheck
 
     - name: Upload argbash generated script
       uses: actions/upload-artifact@v3
