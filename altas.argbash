@@ -7,7 +7,7 @@
 # ARG_OPTIONAL_SINGLE([repository], r, [repository to pull])
 # ARG_OPTIONAL_SINGLE([directory], d, [directory to pull])
 # ARG_POSITIONAL_SINGLE([positional-command-arg], [only one command is available: pull], )
-# ARG_HELP([Atlas is a CLI tool that has essentially one command: \`atlas pull\`\n \nAtlas defaults to using a configuration file named `atlas.yaml` placed\nin the root directory. Configuration file:\n \npull:\n  branch: <branch-name>\n  directory <directory-name>\n  repository: <organization-name>/<repository-name>\n \nAtlas can also use a configuration file in a different path using the \`--config\` flag\nafter \`atlas\`: \`atlas --config pull\`.\n \nAtlas can also be used without a configuration file by using the flags below after\n\`atlas pull\`.\n \n\`-b\` or \`--branch\`\n\`-r\` or \`--repository\`\n\`-d\` or \`--directory\`\n])
+# ARG_HELP([Atlas is a CLI tool that has essentially one command: \`atlas pull\`\n \nAtlas defaults to using a configuration file named \`atlas.yaml\` placed\nin the root directory. Configuration file:\n \npull:\n  branch: <branch-name>\n  directory <directory-name>\n  repository: <organization-name>/<repository-name>\n \nAtlas can also use a configuration file in a different path using the \`--config\` flag\nafter \`atlas\`: \`atlas --config pull\`.\n \nAtlas can also be used without a configuration file by using the flags below after\n\`atlas pull\`.\n \n\`-b\` or \`--branch\`\n\`-r\` or \`--repository\`\n\`-d\` or \`--directory\`\n])
 # ARGBASH_GO
 
 # [ <-- needed because of Argbash
