@@ -12,10 +12,15 @@
 
 # [ <-- needed because of Argbash
 
-echo "Value of --config: $_arg_config"
-echo "Value of --branch: $_arg_branch"
-echo "Value of --repository: $_arg_repository"
-echo "Value of --directory: $_arg_directory"
-echo "Value of positional-command-arg: $_arg_positional_command_arg"
+# only do stuff if the positional arg is "pull"
+# for some reason shellcheck doesn't see this var as being set anywhere...
+# shellcheck disable=SC2154
+if [ "$_arg_positional_command_arg" == "pull" ];
+then
+    echo "Value of --config: $_arg_config"
+    echo "Value of --branch: $_arg_branch"
+    echo "Value of --repository: $_arg_repository"
+    echo "Value of --directory: $_arg_directory"
+fi
 
 # ] <-- needed because of Argbash
