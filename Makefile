@@ -5,4 +5,9 @@ help: ## display this help message
 # requires argbash to be installed
 # installing argbash locally: https://argbash.readthedocs.io/en/stable/install.html#user-install
 argbash: ## generate atlas.sh from argbash template
-	argbash -c ./atlas.argbash -o atlas.sh
+	argbash -c atlas.argbash -o atlas.sh
+
+# requires shellcheck to be installed
+# installing shellcheck locally: https://github.com/koalaman/shellcheck#installing
+shellcheck:
+	shellcheck atlas.sh
