@@ -21,3 +21,9 @@ jobs:
 
     - name: Use argbash to generate script
       run: make argbash
+
+    - name: Upload argbash generated script
+      uses: actions/upload-artifact@v3
+      with:
+        name: atlas.sh
+        path: atlas.sh
