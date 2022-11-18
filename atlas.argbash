@@ -7,17 +7,44 @@
 # ARG_OPTIONAL_SINGLE([repository], r, [repository to pull])
 # ARG_OPTIONAL_SINGLE([directory], d, [directory to pull])
 # ARG_POSITIONAL_SINGLE([positional-command-arg], [only one command is available: pull], )
-# ARG_HELP([Atlas is a CLI tool that has essentially one command: \`atlas pull\`\n \nAtlas defaults to using a configuration file named \`atlas.yaml\` placed\nin the root directory. Configuration file:\n \npull:\n  branch: <branch-name>\n  directory <directory-name>\n  repository: <organization-name>/<repository-name>\n \nAtlas can also use a configuration file in a different path using the \`--config\` flag\nafter \`atlas\`: \`atlas --config pull\`.\n \nAtlas can also be used without a configuration file by using the flags below after\n\`atlas pull\`.\n \n\`-b\` or \`--branch\`\n\`-r\` or \`--repository\`\n\`-d\` or \`--directory\`\n])
+# ARG_HELP([Atlas is a CLI tool that has essentially one command: \`atlas pull\`\n \nAtlas defaults to using a configuration file named \`atlas.yml\` placed\nin the root directory. Configuration file:\n \npull:\n  branch: <branch-name>\n  directory <directory-name>\n  repository: <organization-name>/<repository-name>\n \nAtlas can also use a configuration file in a different path using the \`--config\` flag\nafter \`atlas\`: \`atlas --config pull\`.\n \nAtlas can also be used without a configuration file by using the flags below after\n\`atlas pull\`.\n \n\`-b\` or \`--branch\`\n\`-r\` or \`--repository\`\n\`-d\` or \`--directory\`\n])
 # ARGBASH_GO
 
 # [ <-- needed because of Argbash
+
+# adapted from: https://gist.github.com/briantjacobs/7753bf850ca5e39be409
+# which is based on https://gist.github.com/pkuczynski/8665367
+
+parse_yaml() {
+    local prefix=$2
+    local s
+    local w
+    local fs
+    s='[[:space:]]*'
+    w='[a-zA-Z0-9_]*'
+    fs="$(echo @|tr @ '\034')"
+    sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)${s[:-]}$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
+    awk -F"$fs" '{
+    indent = length($1)/2;
+    vname[indent] = $2;
+    for (i in vname) {if (i > indent) {delete vname[i]}}
+        if (length($3) > 0) {
+            vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+            printf("%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, $3);
+        }
+    }' | sed 's/_=/+=/g'
+}
 
 # only do stuff if the positional arg is "pull"
 # for some reason shellcheck doesn't see this var as being set anywhere...
 # shellcheck disable=SC2154
 if [ "$_arg_positional_command_arg" == "pull" ];
 then
-    echo "Value of --config: $_arg_config"
+    if [ "$_arg_config" ];
+    then
+        echo "Value of --config: $_arg_config"
+    fi
     echo "Value of --branch: $_arg_branch"
     echo "Value of --repository: $_arg_repository"
     echo "Value of --directory: $_arg_directory"
