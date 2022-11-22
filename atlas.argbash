@@ -86,10 +86,18 @@ then
     # Retrieve translation files from the repo
     git pull origin $pull_branch
 
+    # Remove .git directory
+    rm -rf .git
+
+    # Leave the temp dir
+    cd ..
+
     # Copy translation files out of the temp dir
     if [ "$pull_directory" ];
     then
-        cp -r $pull_directory ../
+        cp -r translations_TEMP/$pull_directory/* ./
+    else
+        cp -r translations_TEMP/* ./
     fi
 
     # Remove the temp dir
