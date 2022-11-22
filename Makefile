@@ -15,5 +15,5 @@ argbash: copyconfig ## generate atlas.sh from argbash template
 
 # requires shellcheck to be installed
 # installing shellcheck locally: https://github.com/koalaman/shellcheck#installing
-shellcheck:
-	shellcheck atlas.sh
+shellcheck: argbash
+	shellcheck build/atlas.sh
