@@ -78,7 +78,6 @@ then
     # If a directory is specified, configure git for a sparse checkout
     if [ "$pull_directory" ];
     then
-        
         git config core.sparseCheckout true
         git sparse-checkout init
         git sparse-checkout set $pull_directory
@@ -87,11 +86,13 @@ then
     # Retrieve translation files from the repo
     git pull origin $pull_branch
 
-    # # Copy translation files out of the temp dir
-    # cd ..
-    cp $pull_directory/* ../$pull_directory 
+    # Copy translation files out of the temp dir
+    if [ "$pull_directory" ];
+    then
+        cp -r $pull_directory ../
+    fi
 
-    # echo $remote_url
+    # Remove the temp dir
     rm -rf translations_TEMP
 fi
 
