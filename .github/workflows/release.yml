@@ -1,0 +1,26 @@
+name: Releases
+
+on: 
+  push:
+    tags:
+    - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: matejak/argbash:latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: install dependencies
+      run: apk add make
+
+    - name: Use argbash to generate script
+      run: make argbash
+      
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "build/atlas.sh,build/atlas.yml"
