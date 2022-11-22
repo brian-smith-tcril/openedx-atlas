@@ -59,6 +59,3 @@ docs/{{ cookiecutter.sub_dir_name }}.*.rst
 # Private requirements
 requirements/private.in
 requirements/private.txt
-
-# argbash generated shell script
-atlas.sh
