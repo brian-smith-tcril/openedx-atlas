@@ -38,7 +38,7 @@ then
     if [ "$_arg_config" ];
     then
         echo "Value of --config: $_arg_config"
-        parse_yaml $_arg_config
+        eval $(parse_yaml $_arg_config)
         echo "Value of branch: $pull_branch"
     fi
     echo "Value of --branch: $_arg_branch"
