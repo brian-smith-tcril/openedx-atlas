@@ -66,11 +66,31 @@ then
     echo " - repository: $pull_repository"
     echo " - branch: $pull_branch"
 
-    # todo: actually sparse checkout
+    # Create temp dir for translations
     mkdir translations_TEMP
     cd translations_TEMP
+
+    # Initialize git repo and add remote
     git init -b main
     remote_url="https://github.com/$pull_repository.git"
+    git remote add -f origin $remote_url
+
+    # If a directory is specified, configure git for a sparse checkout
+    if [ "$pull_directory" ];
+    then
+        
+        git config core.sparseCheckout true
+        git sparse-checkout init
+        git sparse-checkout set $pull_directory
+    fi
+
+    # Retrieve translation files from the repo
+    git pull origin $pull_branch
+
+    # Copy translation files out of the temp dir
+    cd ..
+    cp -r translations_TEMP/$pull_directory . 
+
     echo $remote_url
     rm -rf translations_TEMP
 fi
