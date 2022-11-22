@@ -68,23 +68,23 @@ then
 
     # Create temp dir for translations
     mkdir translations_TEMP
-    cd translations_TEMP
+    cd translations_TEMP || exit
 
     # Initialize git repo and add remote
     git init -b main
     remote_url="https://github.com/$pull_repository.git"
-    git remote add -f origin $remote_url
+    git remote add -f origin "$remote_url"
 
     # If a directory is specified, configure git for a sparse checkout
     if [ "$pull_directory" ];
     then
         git config core.sparseCheckout true
         git sparse-checkout init
-        git sparse-checkout set $pull_directory
+        git sparse-checkout set "$pull_directory"
     fi
 
     # Retrieve translation files from the repo
-    git pull origin $pull_branch
+    git pull origin "$pull_branch"
 
     # Remove .git directory
     rm -rf .git
@@ -95,7 +95,7 @@ then
     # Copy translation files out of the temp dir
     if [ "$pull_directory" ];
     then
-        cp -r translations_TEMP/$pull_directory/* ./
+        cp -r translations_TEMP/"$pull_directory"/* ./
     else
         cp -r translations_TEMP/* ./
     fi
