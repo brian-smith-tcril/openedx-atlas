@@ -67,6 +67,12 @@ then
     echo " - branch: $pull_branch"
 
     # todo: actually sparse checkout
+    mkdir translations_TEMP
+    cd translations_TEMP
+    git init -b main
+    remote_url="https://github.com/$pull_repository.git"
+    echo $remote_url
+    rm -rf translations_TEMP
 fi
 
 # ] <-- needed because of Argbash
