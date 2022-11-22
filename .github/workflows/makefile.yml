@@ -28,5 +28,5 @@ jobs:
     - name: Upload argbash generated script
       uses: actions/upload-artifact@v3
       with:
-        name: atlas.sh
-        path: build/atlas.sh
+        name: atlas
+        path: build
