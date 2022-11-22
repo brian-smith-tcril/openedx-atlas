@@ -32,10 +32,9 @@ pull:
   repository: <organization-name>/<repository-name>
 
 Atlas can also use a configuration file in a different path using the `--config` flag
-after `atlas`: `atlas --config pull`.
+after `atlas`: `atlas --config yourconfig.yaml pull`.
 
-Atlas can also be used without a configuration file by using the flags below after
-`atlas pull`.
+The following flags can be used to override the values from the loaded config file
 
 `-b` or `--branch`
 `-r` or `--repository`

@@ -12,28 +12,21 @@
 
 # [ <-- needed because of Argbash
 
-# adapted from: https://gist.github.com/briantjacobs/7753bf850ca5e39be409
-# which is based on https://gist.github.com/pkuczynski/8665367
-
 parse_yaml() {
+    # from https://gist.github.com/pkuczynski/8665367
     local prefix=$2
-    local s
-    local w
-    local fs
-    s='[[:space:]]*'
-    w='[a-zA-Z0-9_]*'
-    fs="$(echo @|tr @ '\034')"
+    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
     sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)${s[:-]}$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
-    awk -F"$fs" '{
-    indent = length($1)/2;
-    vname[indent] = $2;
-    for (i in vname) {if (i > indent) {delete vname[i]}}
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+    awk -F$fs '{
+        indent = length($1)/2;
+        vname[indent] = $2;
+        for (i in vname) {if (i > indent) {delete vname[i]}}
         if (length($3) > 0) {
             vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-            printf("%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, $3);
+            printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
         }
-    }' | sed 's/_=/+=/g'
+    }'
 }
 
 # only do stuff if the positional arg is "pull"
@@ -41,9 +34,12 @@ parse_yaml() {
 # shellcheck disable=SC2154
 if [ "$_arg_positional_command_arg" == "pull" ];
 then
+    # Download the translation files from a repository branch.
     if [ "$_arg_config" ];
     then
         echo "Value of --config: $_arg_config"
+        parse_yaml $_arg_config
+        echo "Value of branch: $pull_branch"
     fi
     echo "Value of --branch: $_arg_branch"
     echo "Value of --repository: $_arg_repository"
