@@ -1,4 +1,0 @@
-pull:
-  branch: try-using-bash
-  directory: example-translations/repos/json
-  repository: brian-smith-tcril/openedx-atlas
