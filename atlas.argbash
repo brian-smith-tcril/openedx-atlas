@@ -45,7 +45,7 @@ then
     fi
 
     # Override vars based on args
-    if [ "$_arg_directory" ];
+    if [ $_arg_directory ];
     then
         pull_directory=$_arg_directory
     fi
