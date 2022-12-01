@@ -17,3 +17,10 @@ argbash: copyconfig ## generate atlas from argbash template
 # installing shellcheck locally: https://github.com/koalaman/shellcheck#installing
 shellcheck: argbash
 	shellcheck build/atlas
+
+# requires shellspec to be installed
+# installing shellspec locally: https://github.com/shellspec/shellspec/#installation
+# note: the linux CI uses version 0.28.1 installed by running: `curl -fsSL https://git.io/shellspec | sh -s 0.28.1 --yes`
+#       the mac CI uses the latest stable version available in brew: `brew tap shellspec/shellspec`, `brew install shellspec`
+shellspec: argbash
+	cd tests && shellspec
