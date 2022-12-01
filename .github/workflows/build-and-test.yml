@@ -1,0 +1,59 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container:
+      image: matejak/argbash:latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: install dependencies
+      run: apk add make
+      
+    - name: Use argbash to generate script
+      run: make argbash
+
+    - name: Upload argbash generated script
+      uses: actions/upload-artifact@v3
+      with:
+        name: atlas
+        path: build
+  shellcheck:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y shellcheck 
+    - name: pull generated script
+      uses: actions/download-artifact@v3
+      with:
+        name: atlas
+    - name: shellcheck generated script
+      run: ls
+
+
+
+  # shellspec-linux:
+  #   needs: build
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: pull generated script
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: atlas
+
+
+
+
+
+  #           - name: shellcheck generated script
+  #     run: make shellcheck

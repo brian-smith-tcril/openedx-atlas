@@ -10,10 +10,10 @@ copyconfig: builddir
 
 # requires argbash to be installed
 # installing argbash locally: https://argbash.readthedocs.io/en/stable/install.html#user-install
-argbash: copyconfig ## generate atlas.sh from argbash template
-	argbash -c atlas.argbash -o build/atlas.sh
+argbash: copyconfig ## generate atlas from argbash template
+	argbash -c atlas.argbash -o build/atlas
 
 # requires shellcheck to be installed
 # installing shellcheck locally: https://github.com/koalaman/shellcheck#installing
 shellcheck: argbash
-	shellcheck build/atlas.sh
+	shellcheck build/atlas
