@@ -39,17 +39,20 @@ jobs:
         name: atlas
     - name: shellcheck generated script
       run: shellcheck atlas
-
-
-
-  # shellspec-linux:
-  #   needs: build
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #   - name: pull generated script
-  #     uses: actions/download-artifact@v3
-  #     with:
-  #       name: atlas
+  shellspec-linux:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: install shellspec
+      run: curl -fsSL https://git.io/shellspec | sh -s 0.28.1 --yes
+    - name: run shellspec
+      run: cd tests && shellspec
+    # - name: pull generated script
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: atlas
+    # - name: 
 
 
 
