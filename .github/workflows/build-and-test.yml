@@ -27,6 +27,7 @@ jobs:
         name: atlas
         path: build
   shellcheck:
+    needs: build
     runs-on: ubuntu-22.04
     steps:
     - name: install dependencies
