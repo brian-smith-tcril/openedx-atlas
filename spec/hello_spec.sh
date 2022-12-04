@@ -1,7 +1,7 @@
 Describe 'hello'
+  Include ./atlas
   It 'says hello'
-    When run ./atlas pull
-    Dump
+    When call hello ShellSpec
     The output should equal 'Hello ShellSpec!'
   End
 End

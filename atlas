@@ -210,6 +210,10 @@ fi
 # echo "FLAG: $FLAG, PARAM: $PARAM, OPTION: $OPTION"
 printf '%s\n' "$@" # rest arguments
 
+hello() {
+  echo "Hello ${1}!"
+}
+
 # parse_yaml() {
 #     # adapted from https://gist.github.com/pkuczynski/8665367
 #     local prefix=$2
