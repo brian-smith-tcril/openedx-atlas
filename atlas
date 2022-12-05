@@ -1,4 +1,6 @@
 #!/bin/bash
+# getoptions generates code that fails this check, so we need to disable it
+# shellcheck disable=SC2004
 
 # @getoptions
 parser_definition() {
