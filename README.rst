@@ -32,7 +32,7 @@ pull:
   repository: <organization-name>/<repository-name>
 
 Atlas can also use a configuration file in a different path using the `--config` flag
-after `atlas`: `atlas --config pull`.
+after `atlas`: `atlas --config config.yml pull`.
 
 Atlas can also be used without a configuration file by using the flags below after
 `atlas pull`.
@@ -40,6 +40,19 @@ Atlas can also be used without a configuration file by using the flags below aft
 `-b` or `--branch`
 `-r` or `--repository`
 `-d` or `--directory`
+
+Running Automated Tests Locally
+-------------------------------
+
+**Install**
+
+* `ShellSpec <https://github.com/shellspec/shellspec#installation>`_
+* `ShellCheck <https://github.com/koalaman/shellcheck#installing>`_
+* `getoptions <https://github.com/ko1nksm/getoptions#installation>`_
+
+**Run**
+
+``make test``
 
 Documentation
 -------------
