@@ -27,7 +27,8 @@ jobs:
         brew tap ko1nksm/getoptions
         brew install getoptions
     - name: run shellspec
-      run: shellspec --format tap
+      run: shellspec --format tap > out.tap
+    - uses: pcolby/tap-summary@v1
     # - name: pull generated script
     #   uses: actions/download-artifact@v3
     #   with:
