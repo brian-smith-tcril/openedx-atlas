@@ -28,15 +28,19 @@ jobs:
         brew install getoptions
     - name: run shellspec
       run: shellspec
-    # - name: pull generated script
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: atlas
-    # - name: 
-
-
-
-
-
-  #           - name: shellcheck generated script
-  #     run: make shellcheck
+  shellspec-mac:
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v3
+    - name: install shellcheck
+      run: brew install shellcheck
+    - name: install shellspec
+      run: |
+        brew tap shellspec/shellspec
+        brew install shellspec
+    - name: install getoptions
+      run: |
+        brew tap ko1nksm/getoptions
+        brew install getoptions
+    - name: run shellspec
+      run: shellspec
