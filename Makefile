@@ -11,7 +11,6 @@ gengetoptions: ## use getoptions to generate argument parsing
 
 # requires shellspec to be installed
 # installing shellspec locally: https://github.com/shellspec/shellspec/#installation
-# note: the linux CI uses version 0.28.1 installed by running: `curl -fsSL https://git.io/shellspec | sh -s 0.28.1 --yes`
-#       the mac CI uses the latest stable version available in brew: `brew tap shellspec/shellspec`, `brew install shellspec`
+# note: the CI uses the latest stable version available in brew: `brew tap shellspec/shellspec`, `brew install shellspec`
 test: ## automated testing using shellspec
 	shellspec

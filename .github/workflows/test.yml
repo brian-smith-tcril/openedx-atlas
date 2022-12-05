@@ -1,0 +1,34 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  shellspec-linux:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: install homebrew
+      run: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    - name: install shellspec
+      run: |
+        brew tap shellspec/shellspec
+        brew install shellspec
+    - name: run shellspec
+      run: shellspec
+    # - name: pull generated script
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: atlas
+    # - name: 
+
+
+
+
+
+  #           - name: shellcheck generated script
+  #     run: make shellcheck
