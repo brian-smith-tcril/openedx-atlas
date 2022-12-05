@@ -1,0 +1,15 @@
+checking in a todo list for now
+
+since we moved to gengetoptions, it'll be good for the CI to understand that
+the general idea will be to keep the generated script in the repo, so we'll just
+want the CI to run gengetoptions on the existing script, and then compare it to the
+committed one and ensure they're the same.
+things to keep in mind
+* getoptions version
+
+releases
+* probably still worth doing them, can be simplified to just pulling the file and adding it to the release
+
+shellspec tests
+* do all the things the python ones did
+* figure out good mocking (maybe split up methods a bit more)
