@@ -19,6 +19,8 @@ parser_definition_pull() {
 	param		BRANCH		-b	--branch			-- "A branch of translation files"
 	param		REPOSITORY	-r	--repository			-- "The repository containing translation files"
 	param		DIRECTORY	-d	--directory			-- "Directory (name of the repository) containing translations to be downloaded"
+  flag		VERBOSE	-v	--verbose			-- "verbose output to terminal"
+  flag		SILENT	-s	--silent			-- "no output to terminal"
 	disp    :usage_pull  -h --help	
 }
 # @end
@@ -112,6 +114,8 @@ CONFIG=''
 BRANCH=''
 REPOSITORY=''
 DIRECTORY=''
+VERBOSE=''
+SILENT=''
 REST=''
 parse_pull() {
   OPTIND=$(($#+1))
@@ -124,7 +128,7 @@ parse_pull() {
       -[brd]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
         ;;
-      -[h]?*) OPTARG=$1; shift
+      -[vsh]?*) OPTARG=$1; shift
         eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
         OPTARG= ;;
     esac
@@ -149,6 +153,16 @@ parse_pull() {
         OPTARG=$2
         DIRECTORY="$OPTARG"
         shift ;;
+      '-v'|'--verbose')
+        [ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+        eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG=''
+        VERBOSE="$OPTARG"
+        ;;
+      '-s'|'--silent')
+        [ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+        eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG=''
+        SILENT="$OPTARG"
+        ;;
       '-h'|'--help')
         usage_pull
         exit 0 ;;
@@ -185,6 +199,8 @@ Options:
   -b, --branch BRANCH         A branch of translation files
   -r, --repository REPOSITORY The repository containing translation files
   -d, --directory DIRECTORY   Directory (name of the repository) containing translations to be downloaded
+  -v, --verbose               verbose output to terminal
+  -s, --silent                no output to terminal
   -h, --help                  
 GETOPTIONSHERE
 }
@@ -256,14 +272,29 @@ display_pull_params() {
 }
 
 pull_translations() {
+  echo "Creating a temporary Git repository to pull translations into <temp dir>..."
+
   # Create temp dir for translations
   mkdir translations_TEMP
   cd translations_TEMP || exit
 
+  # redirect git output to /dev/null if we aren't in verbose mode
+  if [ "$VERBOSE" ];
+  then
+    quiet=""
+  else
+    quiet="--quiet"
+  fi
+
   # Initialize git repo and add remote
-  git init -b main
+  git init $quiet -b main
   remote_url="https://github.com/$pull_repository.git"
   git remote add -f origin "$remote_url"
+  
+  # finished "Creating a temporary Git repository to pull translations into <temp dir>..." step
+  echo "Done."
+
+  echo "Pulling translations into <temp dir>..."
 
   # If a directory is specified, configure git for a sparse checkout
   if [ "$pull_directory" ];
@@ -274,13 +305,18 @@ pull_translations() {
   fi
 
   # Retrieve translation files from the repo
-  git pull origin "$pull_branch"
+  git pull $quiet origin "$pull_branch"
 
   # Remove .git directory
   rm -rf .git
 
   # Leave the temp dir
   cd ..
+
+  # finished "Pulling translations into <temp dir>..." step
+  echo "Done."
+
+  echo "Copying translations from <temp dir> to <dest dir>..."
 
   # Copy translation files out of the temp dir
   if [ "$pull_directory" ];
@@ -290,8 +326,20 @@ pull_translations() {
       cp -r translations_TEMP/* ./
   fi
 
+  # finished "Copying translations from <temp dir> to <dest dir>..." step
+  echo "Done."
+
+  echo "Removing temporary directory..."
+
   # Remove the temp dir
   rm -rf translations_TEMP
+
+  # finshed "Removing temporary directory..." step
+  echo "Done."
+
+  # finished pulling translations!
+  echo ""
+  echo "Translations pulled successfully!"
 }
 
 # used for shellspec mocking
@@ -307,7 +355,12 @@ if [ $# -gt 0 ]; then
 		pull)
 			parse_pull "$@"
       set_pull_params
-      display_pull_params
+
+      if [ -z "$SILENT" ];
+      then
+        display_pull_params
+      fi
+      echo $VERBOSE
       # allow mocking pull_translations 
       __ begin_pull_translations_mock __
       pull_translations
