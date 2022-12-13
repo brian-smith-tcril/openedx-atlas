@@ -1,42 +1,41 @@
-Describe 'Test full silent flag'
+Describe 'Test silent flag'
   # mock pull translations
   Intercept begin_pull_translations_mock
   __begin_pull_translations_mock__() {
-    pull_translations() {
-      echo "output from pull_translations"
-      PULL_TRANSLATIONS_CALLED=true
-      %preserve PULL_TRANSLATIONS_CALLED
+    git() {
+      if [ "$quiet" ];
+      then
+        GIT_CALLED_QUIETLY=true
+      else
+        GIT_CALLED_NOT_QUIETLY=true
+      fi
+      %preserve GIT_CALLED_QUIETLY
+      %preserve GIT_CALLED_NOT_QUIETLY
+    }
+
+    cp() {
+      CP_CALLED=true
+      %preserve CP_CALLED
     }
   }
 
-  It 'pulls translations with no output'
+  It 'pulls translations with no output (full flag)'
+    GIT_CALLED_QUIETLY=false
+    GIT_CALLED_NOT_QUIETLY=false
+    CP_CALLED=false
     When run source ./atlas pull --silent
-    The lines of output should equal 4
-    The line 1 of output should equal 'Pulling translation files'
-    The line 2 of output should equal ' - directory: Not Specified'
-    The line 3 of output should equal ' - repository: openedx/openedx-translations'
-    The line 4 of output should equal ' - branch: main'
-    The variable PULL_TRANSLATIONS_CALLED should equal true
+    The lines of output should equal 0
+    The variable GIT_CALLED_QUIETLY should equal true
+    The variable GIT_CALLED_NOT_QUIETLY should equal false
   End
-End
 
-Describe 'Test short silent flag'
-  # mock pull translations
-  Intercept begin_pull_translations_mock
-  __begin_pull_translations_mock__() {
-    pull_translations() {
-      PULL_TRANSLATIONS_CALLED=true
-      %preserve PULL_TRANSLATIONS_CALLED
-    }
-  }
-
-  It 'pulls translations with no output'
+  It 'pulls translations with no output (short flag)'
+    GIT_CALLED_QUIETLY=false
+    GIT_CALLED_NOT_QUIETLY=false
+    CP_CALLED=false
     When run source ./atlas pull -s
-    The lines of output should equal 4
-    The line 1 of output should equal 'Pulling translation files'
-    The line 2 of output should equal ' - directory: Not Specified'
-    The line 3 of output should equal ' - repository: openedx/openedx-translations'
-    The line 4 of output should equal ' - branch: main'
-    The variable PULL_TRANSLATIONS_CALLED should equal true
+    The lines of output should equal 0
+    The variable GIT_CALLED_QUIETLY should equal true
+    The variable GIT_CALLED_NOT_QUIETLY should equal false
   End
 End
