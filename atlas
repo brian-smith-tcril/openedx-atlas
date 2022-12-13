@@ -272,7 +272,10 @@ display_pull_params() {
 }
 
 pull_translations() {
-  echo "Creating a temporary Git repository to pull translations into \"./translations_TEMP\"..."
+  if [ -z "$SILENT" ];
+  then
+    echo "Creating a temporary Git repository to pull translations into \"./translations_TEMP\"..."
+  fi
 
   # Create temp dir for translations
   mkdir translations_TEMP
@@ -297,9 +300,12 @@ pull_translations() {
   fi
   
   # finished "Creating a temporary Git repository to pull translations into <temp dir>..." step
-  echo "Done."
+  if [ -z "$SILENT" ];
+  then
+    echo "Done."
 
-  echo "Pulling translations into \"./translations_TEMP\"..."
+    echo "Pulling translations into \"./translations_TEMP\"..."
+  fi
 
   # If a directory is specified, configure git for a sparse checkout
   if [ "$pull_directory" ];
@@ -319,9 +325,12 @@ pull_translations() {
   cd ..
 
   # finished "Pulling translations into <temp dir>..." step
-  echo "Done."
+  if [ -z "$SILENT" ];
+  then
+    echo "Done."
 
-  echo "Copying translations from \"./translations_TEMP\" to \".\"..."
+    echo "Copying translations from \"./translations_TEMP\" to \".\"..."
+  fi
 
   # Copy translation files out of the temp dir
   if [ "$pull_directory" ];
@@ -332,19 +341,25 @@ pull_translations() {
   fi
 
   # finished "Copying translations from <temp dir> to <dest dir>..." step
-  echo "Done."
+  if [ -z "$SILENT" ];
+  then
+    echo "Done."
 
-  echo "Removing temporary directory..."
+    echo "Removing temporary directory..."
+  fi
 
   # Remove the temp dir
   rm -rf translations_TEMP
 
   # finshed "Removing temporary directory..." step
-  echo "Done."
+  if [ -z "$SILENT" ];
+  then
+    echo "Done."
 
-  # finished pulling translations!
-  echo ""
-  echo "Translations pulled successfully!"
+    # finished pulling translations!
+    echo ""
+    echo "Translations pulled successfully!"
+  fi
 }
 
 # used for shellspec mocking
@@ -365,7 +380,6 @@ if [ $# -gt 0 ]; then
       then
         display_pull_params
       fi
-      echo $VERBOSE
       # allow mocking pull_translations 
       __ begin_pull_translations_mock __
       pull_translations
