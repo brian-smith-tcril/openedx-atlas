@@ -28,7 +28,13 @@ jobs:
         # Run in dry-run mode to determine the next tag version and store it in semantic-release-dry-run.txt
         npx semantic-release@25 --dry-run | tee semantic-release-dry-run.txt
 
+        echo "BLARG"
+        echo "BLARG"
+        echo "BLARG"
         cat semantic-release-dry-run.txt
+        echo "BLARG"
+        echo "BLARG"
+        echo "BLARG"
 
         if grep -q 'no new version is released' semantic-release-dry-run.txt; then
           RELEASE_NEEDED=no
