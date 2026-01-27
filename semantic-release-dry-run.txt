@@ -1,0 +1,52 @@
+npm warn exec The following package was not found and will be installed: semantic-release@25.0.2
+npm warn deprecated semver-diff@5.0.0: Deprecated as the semver package now supports this built-in.
+[3:52:28 PM] [semantic-release] › ℹ  Running semantic-release version 25.0.2
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/github"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/npm"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "analyzeCommits" from "@semantic-release/commit-analyzer"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "generateNotes" from "@semantic-release/release-notes-generator"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "prepare" from "@semantic-release/npm"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/github"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "publish" from "@semantic-release/npm"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/github"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "addChannel" from "@semantic-release/npm"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "success" from "@semantic-release/github"
+[3:52:29 PM] [semantic-release] › ✔  Loaded plugin "fail" from "@semantic-release/github"
+[3:52:31 PM] [semantic-release] › ⚠  Run automated release from branch main on repository git+https://github.com/openedx/openedx-atlas.git in dry-run mode
+[3:52:31 PM] [semantic-release] › ✔  Allowed to push to the Git repository
+[3:52:31 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/github"
+[3:52:31 PM] [semantic-release] [@semantic-release/github] › ℹ  Verify GitHub authentication (https://api.github.com)
+[3:52:32 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/github"
+[3:52:32 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/npm"
+[3:52:32 PM] [semantic-release] [@semantic-release/npm] › ℹ  Verifying OIDC context for publishing from GitHub Actions
+[3:52:33 PM] [semantic-release] [@semantic-release/npm] › ℹ  OIDC token exchange with the npm registry succeeded
+[3:52:33 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/npm"
+[3:52:33 PM] [semantic-release] › ℹ  Found git tag v0.7.0 associated with version 0.7.0 on branch main
+[3:52:33 PM] [semantic-release] › ℹ  Found 3 commits since last release
+[3:52:33 PM] [semantic-release] › ℹ  Start step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[3:52:33 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix(ci): use `setup-node` (#71)
+[3:52:33 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[3:52:33 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix(ci): add `.nvmrc` and update release workflow to use it (#70)
+[3:52:33 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[3:52:33 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: build: Update the release workflow to use OIDC. (#67)
+
+Also make other smaller updates to modernize the release file.
+[3:52:33 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[3:52:33 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 3 commits complete: patch release
+[3:52:33 PM] [semantic-release] › ✔  Completed step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[3:52:33 PM] [semantic-release] › ℹ  The next release version is 0.7.1
+[3:52:33 PM] [semantic-release] › ℹ  Start step "generateNotes" of plugin "@semantic-release/release-notes-generator"
+[3:52:33 PM] [semantic-release] › ✔  Completed step "generateNotes" of plugin "@semantic-release/release-notes-generator"
+[3:52:33 PM] [semantic-release] › ⚠  Skip step "prepare" of plugin "@semantic-release/npm" in dry-run mode
+[3:52:33 PM] [semantic-release] › ⚠  Skip v0.7.1 tag creation in dry-run mode
+[3:52:33 PM] [semantic-release] › ⚠  Skip step "publish" of plugin "@semantic-release/github" in dry-run mode
+[3:52:33 PM] [semantic-release] › ⚠  Skip step "publish" of plugin "@semantic-release/npm" in dry-run mode
+[3:52:33 PM] [semantic-release] › ⚠  Skip step "success" of plugin "@semantic-release/github" in dry-run mode
+[3:52:33 PM] [semantic-release] › ✔  Published release 0.7.1 on default channel
+[3:52:33 PM] [semantic-release] › ℹ  Release note for version 0.7.1:
+## 0.7.1 (https://github.com/openedx/openedx-atlas/compare/v0.7.0...v0.7.1) (2026-01-27)
+
+### Bug Fixes
+
+    * **ci:** add `.nvmrc` and update release workflow to use it ([#70](https://github.com/openedx/openedx-atlas/issues/70)) ([eb1cc5c](https://github.com/openedx/openedx-atlas/commit/eb1cc5c1c8bcd3d70602f8decead9340a47252a1))
+    * **ci:** use `setup-node` ([#71](https://github.com/openedx/openedx-atlas/issues/71)) ([5379499](https://github.com/openedx/openedx-atlas/commit/537949932f3838926f583132f4eb0adc8d8be73e))

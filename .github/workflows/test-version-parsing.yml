@@ -1,0 +1,38 @@
+name: test version parsing
+on:
+  push:
+    branches:
+    - test-version-parsing
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: test parsing
+      run: |
+        if grep -q 'no new version is released' semantic-release-dry-run.txt; then
+          RELEASE_NEEDED=no
+        else
+          RELEASE_NEEDED=yes
+        fi
+
+        echo "RELEASE_NEEDED=$RELEASE_NEEDED" >> $GITHUB_ENV
+
+        cat semantic-release-dry-run.txt | \
+          grep -o 'Skip v.* tag creation in dry-run mode' \
+          | sed -e 's/^Skip //' | sed -e 's/ tag creation in dry-run mode$//'
+
+        NEXT_VERSION=$(
+          cat semantic-release-dry-run.txt | \
+            grep -o 'Skip v.* tag creation in dry-run mode' \
+            | sed -e 's/^Skip //' | sed -e 's/ tag creation in dry-run mode$//'
+        )
+        echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
+
+        echo "DEBUG: RELEASE_NEEDED = '$RELEASE_NEEDED' "
+        echo "DEBUG: Next version is '$NEXT_VERSION'"  # Debug version number
