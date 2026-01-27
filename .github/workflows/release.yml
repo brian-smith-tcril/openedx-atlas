@@ -27,14 +27,10 @@ jobs:
       run: |
         # Run in dry-run mode to determine the next tag version and store it in semantic-release-dry-run.txt
         npx semantic-release@25 --dry-run | tee semantic-release-dry-run.txt
+        FORCE_COLOR=0 npx semantic-release@25 --dry-run | tee semantic-release-dry-run-nocolor.txt
 
-        echo "BLARG"
-        echo "BLARG"
-        echo "BLARG"
-        cat semantic-release-dry-run.txt
-        echo "BLARG"
-        echo "BLARG"
-        echo "BLARG"
+        sha256sum semantic-release-dry-run.txt
+        sha256sum semantic-release-dry-run-nocolor.txt
 
         if grep -q 'no new version is released' semantic-release-dry-run.txt; then
           RELEASE_NEEDED=no
